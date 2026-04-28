@@ -94,5 +94,6 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete($student);
-        return to_route('student.index')->withSuccess('Data berhasil dihapus');    }
+        return to_route('student.index')->withSuccess('Data berhasil dihapus'); 
+   }
 }
