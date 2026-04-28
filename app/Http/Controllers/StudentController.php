@@ -63,7 +63,7 @@ class StudentController extends Controller
     {
          return view('student.edit', 
             ['title' => 'Edit Student',
-            'students' => $student,
+            'student' => $student,
         ]);
     }
 
