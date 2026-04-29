@@ -37,10 +37,15 @@ class DepartmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Department $department)
-    {
-        //
-    }
+   public function show($id)
+{
+    $department = Department::findOrFail($id);
+
+    return view('department.show', [
+        'title' => 'Detail Department',
+        'department' => $department
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.
