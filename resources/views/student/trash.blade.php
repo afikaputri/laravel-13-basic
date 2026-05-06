@@ -15,14 +15,24 @@
         @foreach ($students as $student)
             <li class="list-group-item">
                 {{ $loop->iteration }}. {{ $student->nim }} -- {{ $student->name }} -- {{ $student->gender }}
-                <a class="btn btn-warning btn-sm" href="{{ route('student.edit', $student) }}" role="button">edit</a>
-                <form action="{{ route('student.destroy', $student) }}" method="POST" class="d-inline">
+                <form action="{{ route('student.restore', $student) }}" method="POST" class="d-inline">
+                    @method('PUT')
+                    @csrf
+
+                    <button type="submit" class="btn btn-warning btn-sm"
+                        onclick="return confirm('Anda Yakin Ingin Mengembalikan Data')">
+                        Restore
+                    </button>
+                </form>
+
+                <form action="{{ route('student.forceDelete', $student) }}" method="POST" class="d-inline">
                     @method('DELETE')
                     @csrf
 
                     <button type="submit" class="btn btn-danger btn-sm"
-                        onclick="return confirm('Anda Yakin')">Delete</button>
-
+                        onclick="return confirm('Anda Yakin ingin Menghapus Secara Permanen')">
+                        Force Delete
+                    </button>
                 </form>
             </li>
         @endforeach
