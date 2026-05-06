@@ -4,7 +4,7 @@
 
     @session('success')
         <div class="alert alert-success">
-            {{ session('success') }}
+            {{ $value }}
         </div>
     @endsession
 
@@ -14,11 +14,11 @@
 
         <div class="row g-3 mb-3">
             <div class="col-md-4">
-                <input type="text" class="form-control" name="keyword" placeholder="Search lecturer name ..."
-                    value="{{ request('keyword') }}">
+                <input type="text" class="form-control" id="keyword" name="keyword"
+                    placeholder="Search Lecturer Name ..." value="{{ request('keyword') }}">
             </div>
             <div class="col-md-4">
-                <select class="form-select" id="department_id" name="department_id">
+                <select class="form-select" id="department_id" id="department_id" name="department_id">
                     <option value="">All Department</option>
                     @foreach ($departments as $department)
                         <option value="{{ $department->id }}"
@@ -39,6 +39,7 @@
         @foreach ($lecturers as $lecturer)
             <li class="list-group-item">
                 {{ $lecturers->firstItem() + $loop->index }}. {{ $lecturer->name }} -- {{ $lecturer->department->name }}
+                <a class="btn btn-info btn-sm" href="{{ route('lecturer.show', $lecturer) }}" role="button">Detail</a>
                 <a class="btn btn-warning btn-sm" href="{{ route('lecturer.edit', $lecturer) }}"
                     role="button">edit</a>
                 <form action="{{ route('lecturer.destroy', $lecturer) }}" method="POST" class="d-inline">
@@ -49,6 +50,7 @@
                         onclick="return confirm('Anda Yakin')">Delete</button>
 
                 </form>
+
             </li>
         @endforeach
     </ul>

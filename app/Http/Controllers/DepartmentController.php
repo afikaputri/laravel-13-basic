@@ -12,10 +12,10 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return view('department.index', 
-            ['title' => 'Department',
+         return view('department.index', [
+            'title' => 'Department',
             'departments' => Department::latest()->get(),
-        ]);    
+            ]);
     }
 
     /**
@@ -23,7 +23,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('department.create', ['title' => 'Create Department']);
     }
 
     /**
@@ -31,28 +31,37 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+           $validated = $request->validate([
+        'name' => 'required|max:255',
+        ], [
+        'name.required' => 'Kolom tidak boleh kosong',
+        'name.max' => 'Kolom tidak boleh lebih dari :max karakter',
+        ]);
+
+        Department::create($validated);
+    return to_route('department.index')->withSuccess('Data berhasil ditambahkan');
     }
 
     /**
      * Display the specified resource.
      */
-   public function show($id)
-{
-    $department = Department::findOrFail($id);
-
-    return view('department.show', [
-        'title' => 'Detail Department',
-        'department' => $department
-    ]);
-}
+    public function show(Department $department)
+    {
+         return view('department.show', [
+            'title' => 'Detail Department',
+            'department' => $department,
+            ]);
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Department $department)
     {
-        //
+        return view('department.edit', [
+            'title' => 'Edit Department',
+            'department' => $department,
+            ]);
     }
 
     /**
@@ -60,7 +69,16 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+         $validated = $request->validate([
+        'name' => 'required|max:255',
+    ], [
+        'name.required' => 'Kolom tidak boleh kosong',
+        'name.max' => 'Kolom tidak boleh lebih dari :max karakter',
+    ]);
+
+    
+    $department->update($validated);
+    return to_route('department.index')->withSuccess('Data berhasil diubah');
     }
 
     /**
@@ -68,6 +86,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+         $department->delete($department);
+    return to_route('department.index')->withSuccess('Data berhasil dihapus');
     }
 }

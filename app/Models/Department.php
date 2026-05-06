@@ -14,3 +14,5 @@ class Department extends Model
     return $this->hasMany(Lecturer::class);
     }
 }
+
+
